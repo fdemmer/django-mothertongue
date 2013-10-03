@@ -8,8 +8,12 @@ INSTALLED_APPS = (
     'mothertongue',
     'mothertongue.tests',
     )
-
-DATABASE_ENGINE = 'sqlite3'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+    }
+}
 USE_I18N = True
 TIME_ZONE = 'Europe/London'
 LANGUAGE_CODE = 'en'
@@ -27,3 +31,4 @@ MIDDLEWARE_CLASSES = (
     'localeurl.middleware.LocaleURLMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
 )
+SECRET_KEY = "fortestingonly"
