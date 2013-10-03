@@ -4,11 +4,12 @@ from django.conf import settings
 from django.db import IntegrityError
 from django.template import RequestContext
 from django.test import TestCase
+from django.test.client import RequestFactory
 from django.utils.translation import activate, get_language, ugettext, ugettext_lazy as _
 
 # grab stuff we need from our project
 from mothertongue.tests.models import TestModel, TestModelTranslation
-from mothertongue.tests.test_utils import RequestFactory
+
 
 # create class to test mothertongue
 class TestMotherTongue(TestCase):
