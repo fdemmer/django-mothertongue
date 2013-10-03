@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # import stuff we need from django
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models

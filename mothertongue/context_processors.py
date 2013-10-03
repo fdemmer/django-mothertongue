@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # import stuff we need from Python
 import re
 
