@@ -37,8 +37,8 @@ class TranslatedModelBase(models.Model):
                 translation_set = get('translation_set')
                 code = translation.get_language()
                 translated_manager = get(translation_set)
+                translated_object = None
                 try:
-                    translated_object = None
                     translated_object = self._translation_cache[code]
                 except KeyError:
                     translated_object = translated_manager.get(language=code)
