@@ -1,7 +1,6 @@
 # import stuff we need from django
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.utils.translation import get_language, ugettext, ugettext_lazy as _
 from django.utils import translation
 
 # import package specific stuff

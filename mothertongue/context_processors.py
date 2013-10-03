@@ -1,5 +1,5 @@
 # import stuff we need from Python
-import re, copy
+import re
 
 # import stuff we need from django
 from django.conf import settings
