@@ -8,7 +8,7 @@ from django.utils import translation
 from django.conf import settings
 
 # class to handle translated models
-class MothertongueModelTranslate(models.Model):
+class TranslatedModelBase(models.Model):
     """
     Models that extend this class will have the ability to define:
     - translation_set, e.g: 'contenttranslation_set', the many to many
@@ -23,7 +23,7 @@ class MothertongueModelTranslate(models.Model):
         abstract = True
 
     def __init__(self, *args, **kwargs):
-        super(MothertongueModelTranslate, self).__init__(*args, **kwargs)
+        super(TranslatedModelBase, self).__init__(*args, **kwargs)
         self._translation_cache = {}
 
     def __getattribute__(self, name):
@@ -31,7 +31,7 @@ class MothertongueModelTranslate(models.Model):
         Specialise to look for translated content, note we use super's
         __getattribute__ within this function to avoid a recursion error.
         """
-        get = lambda p:super(MothertongueModelTranslate, self).__getattribute__(p)
+        get = lambda p:super(TranslatedModelBase, self).__getattribute__(p)
         translated_fields = get('translated_fields')
         if name in translated_fields:
             try:
