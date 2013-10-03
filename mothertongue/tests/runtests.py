@@ -2,16 +2,17 @@
 import os, sys
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'mothertongue.tests.test_settings'
-parent = os.path.dirname(os.path.dirname(os.path.dirname(
-            os.path.abspath(__file__))))
 
+parent = os.path.dirname(os.path.dirname(os.path.dirname(
+    os.path.abspath(__file__))))
 sys.path.insert(0, parent)
 
-from django.test.simple import run_tests
-from django.conf import settings
+from django.test.simple import DjangoTestSuiteRunner
 
 def runtests():
-    failures = run_tests(['tests'], verbosity=1, interactive=True)
+
+    tester = DjangoTestSuiteRunner(verbosity=1, interactive=True)
+    failures = tester.run_tests(['tests'])
     sys.exit(failures)
 
 if __name__ == '__main__':
