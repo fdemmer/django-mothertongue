@@ -24,13 +24,13 @@ class TestMotherTongue(TestCase):
         self.g.save()
         
         # add one translation for spanish
-        self.t = TestModelTranslation(test_model_instance=self.g, language='es', test_field_1='es title', test_field_2='es content')
+        self.t = TestModelTranslation(test_model_instance=self.g, obj_lang='es', test_field_1='es title', test_field_2='es content')
         
         # save first spanish translation
         self.t.save()
         
         # add a second record for french for the same object - this should add correctly as its not a duplicate and doesn't contradict the `unique-together` attribute
-        self.t2 = TestModelTranslation(test_model_instance=self.g, language='fr', test_field_1='fr title', test_field_2='fr content')
+        self.t2 = TestModelTranslation(test_model_instance=self.g, obj_lang='fr', test_field_1='fr title', test_field_2='fr content')
 
         # save french translation
         self.t2.save()
@@ -49,7 +49,7 @@ class TranslationModelsTestCase(TestMotherTongue):
     def test_unique_field_constraints(self):
                                 
         # add a second record for spanish for the same base object - the `unique-together` attribute on the model should through an IntegrityError here
-        t3 = TestModelTranslation(test_model_instance=self.g, language='es', test_field_1='es title duplicate', test_field_2='es content duplicate')
+        t3 = TestModelTranslation(test_model_instance=self.g, obj_lang='es', test_field_1='es title duplicate', test_field_2='es content duplicate')
         
         # try and save the duplicate entry
         self.assertRaises(IntegrityError, t3.save)
@@ -73,11 +73,11 @@ class TranslationModelsTestCase(TestMotherTongue):
     def test_translation_result_set(self):
             
         # grab translation records now associated with the base object and order them by language so that we can confirm there is one french and one spanish translation
-        translations = TestModelTranslation.objects.all().filter(test_model_instance=self.g).order_by('language')
+        translations = TestModelTranslation.objects.all().filter(test_model_instance=self.g).order_by('obj_lang')
                 
         # check to make sure the records are what we expect
-        self.assertEqual(translations[0].language, 'es')
-        self.assertEqual(translations[1].language, 'fr')
+        self.assertEqual(translations[0].obj_lang, 'es')
+        self.assertEqual(translations[1].obj_lang, 'fr')
 
     def test_language_returned(self):
         
