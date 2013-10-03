@@ -25,6 +25,25 @@ class TranslatedModelBase(models.Model):
         super(TranslatedModelBase, self).__init__(*args, **kwargs)
         self._translation_cache = {}
 
+    @property
+    def translations_query(self):
+        """
+        Property to quickly get the queryset for the translations.
+        """
+        get = lambda p: super(TranslatedModelBase, self).__getattribute__(p)
+        translation_set_name = get('translation_set')
+        return get(translation_set_name)
+
+    def has_translation(self, language):
+        """
+        Returns True if this model has a translation in `language`.
+        Always returns True if `language` is the default language (settings
+        .LANGUAGE_CODE).
+        """
+        if language == settings.LANGUAGE_CODE:
+            return True
+        return self.translations_query.filter(obj_lang=language).count() > 0
+
     def __getattribute__(self, name):
         """
         Specialise to look for translated content, note we use super's
@@ -41,7 +60,7 @@ class TranslatedModelBase(models.Model):
                 try:
                     translated_object = self._translation_cache[code]
                 except KeyError:
-                    translated_object = translated_manager.get(language=code)
+                    translated_object = translated_manager.get(obj_lang=code)
                 finally:
                     self._translation_cache[code] = translated_object
                 if translated_object:
